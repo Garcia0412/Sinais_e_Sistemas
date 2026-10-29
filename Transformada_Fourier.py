@@ -1,6 +1,7 @@
 # Exercício Extra – Blue Whale
 # ALUNO: VINÍCIUS LIMA GARCIA - 12421EEL009
 import os
+from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 import soundfile as sf
@@ -8,8 +9,11 @@ from scipy.fft import fft
 import sounddevice as sd
 from scipy.fft import rfftfreq
 
+# Path
+BASE_DIR = Path(__file__).resolve().parent
+
 # Leitura do arquivo .au
-whaleFile = r'C:\Local_files\Sinais\bluewhale.au.au'
+whaleFile = BASE_DIR / "bluewhale.au.au"
 X, Fs = sf.read(whaleFile)
 
 # Definindo a pasta de destino para salvar os gráficos
@@ -65,11 +69,11 @@ P2[1:-1] = 2*P2[1:-1]  # Corrigindo a amplitude para as frequências positivas
 f = rfftfreq(N, 1/Fs)  # Frequências correspondentes
 
 plt.figure(2)
-plt.stem(f, P2, basefmt=" ")
+plt.plot(f, P2)
 plt.title("Espectro do Sinal - Unilateral")
 plt.xlabel("f (Hz)")
 plt.ylabel("|X(f)|")
-plt.xlim([0, 30])                   # Zoom, espectro vai até 500 Hz
+plt.xlim([0, 50])                   # Zoom, espectro vai até 500 Hz
 plt.grid(True)
 plt.savefig("Resultados/Espectro_Unilateral.png", dpi=300, bbox_inches='tight')
 plt.show()
